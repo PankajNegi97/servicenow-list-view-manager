@@ -1,0 +1,363 @@
+:root {
+    color-scheme: light dark;
+    --bg: #f4f6f8;
+    --panel: #ffffff;
+    --text: #1f2933;
+    --muted: #667085;
+    --border: #d9e2ec;
+    --primary: #0b5cad;
+    --primary-dark: #084b8f;
+    --danger: #b42318;
+    --danger-bg: #fff1f0;
+    --input-bg: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #0f172a;
+        --panel: #1e293b;
+        --text: #f8fafc;
+        --muted: #94a3b8;
+        --border: #334155;
+        --primary: #38bdf8;
+        --primary-dark: #0284c7;
+        --danger: #f87171;
+        --danger-bg: #451a1a;
+        --input-bg: #0f172a;
+    }
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    width: 390px;
+    margin: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+.app {
+    padding: 14px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.brand-logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    object-fit: cover;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+h1,
+h2,
+p {
+    margin: 0;
+}
+
+h1 {
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+h2 {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.header p {
+    margin-top: 2px;
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.version {
+    align-self: center;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 2px 8px;
+    color: var(--muted);
+    background: var(--panel);
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+label {
+    display: block;
+    margin: 0 0 5px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.btn-text {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--primary);
+    cursor: pointer;
+}
+
+.btn-text:hover {
+    text-decoration: underline;
+    background: none;
+}
+
+input,
+textarea {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 10px;
+    font: inherit;
+    font-size: 12px;
+    color: var(--text);
+    background: var(--input-bg);
+}
+
+input:focus,
+textarea:focus {
+    outline: 2px solid rgba(56, 189, 248, 0.3);
+    border-color: var(--primary);
+}
+
+textarea {
+    min-height: 110px;
+    resize: vertical;
+    margin-bottom: 10px;
+}
+
+#profileName {
+    margin-bottom: 10px;
+}
+
+.actions,
+.profile-actions {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+button {
+    border: 0;
+    border-radius: 6px;
+    padding: 7px 11px;
+    cursor: pointer;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    background: var(--primary);
+    color: #fff;
+    transition: background 0.15s ease;
+}
+
+button:hover {
+    background: var(--primary-dark);
+}
+
+button.secondary {
+    background: var(--border);
+    color: var(--text);
+}
+
+button.secondary:hover {
+    opacity: 0.85;
+}
+
+button.danger {
+    background: var(--danger-bg);
+    color: var(--danger);
+}
+
+button.danger:hover {
+    opacity: 0.85;
+}
+
+.btn-sm {
+    padding: 4px 8px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.profiles-header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.tools-row {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    gap: 6px;
+    align-items: center;
+}
+
+#searchProfiles {
+    padding: 5px 8px;
+    font-size: 12px;
+}
+
+.status {
+    display: none;
+    border-radius: 6px;
+    padding: 8px 10px;
+    margin-bottom: 10px;
+    font-size: 12px;
+    background: #eef6ff;
+    color: #184e77;
+    line-height: 1.4;
+}
+
+@media (prefers-color-scheme: dark) {
+    .status {
+        background: #1e3a8a;
+        color: #93c5fd;
+    }
+}
+
+.status.error {
+    display: block;
+    background: var(--danger-bg);
+    color: var(--danger);
+}
+
+.status.info,
+.status.success {
+    display: block;
+}
+
+.status.success {
+    background: #ecfdf3;
+    color: #027a48;
+}
+
+@media (prefers-color-scheme: dark) {
+    .status.success {
+        background: #064e3b;
+        color: #6ee7b7;
+    }
+}
+
+.profiles {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 48px;
+}
+
+.profile-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px;
+    background: var(--panel);
+}
+
+.profile-title {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    align-items: flex-start;
+    margin-bottom: 4px;
+}
+
+.profile-title strong {
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+.count {
+    flex: 0 0 auto;
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.preview {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.35;
+    margin-bottom: 9px;
+    overflow-wrap: anywhere;
+}
+
+.empty {
+    color: var(--muted);
+    font-size: 12px;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 4px;
+    margin-top: 4px;
+}
+
+.bmc-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #000000;
+    background-color: #FFDD00;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 6px;
+    text-decoration: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: transform 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.bmc-button:hover {
+    background-color: #FFEA00;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.bmc-button span {
+    font-size: 13px;
+}
+
+

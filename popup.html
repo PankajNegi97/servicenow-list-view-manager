@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List View Manager for ServiceNow</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+    <main class="app">
+        <header class="header">
+            <div class="brand">
+                <img src="icons/icon48.png" alt="Logo" class="brand-logo">
+                <div>
+                    <h1>List View Manager</h1>
+                    <p>For ServiceNow columns</p>
+                </div>
+            </div>
+            <span class="version">v1.0</span>
+        </header>
+
+
+        <section class="panel">
+            <label for="profileName">Profile Name</label>
+            <input id="profileName" type="text" placeholder="Example: Incident Daily View" autocomplete="off">
+
+            <div class="label-row">
+                <label for="columns">Columns (one per line)</label>
+                <button id="captureBtn" type="button" class="btn-text" title="Read columns from open ServiceNow page">📸 Capture from Page</button>
+            </div>
+            <textarea id="columns" placeholder="Number&#10;Short description&#10;Priority&#10;State&#10;Assigned to"></textarea>
+
+            <div class="actions">
+                <button id="saveBtn" type="button">Save Profile</button>
+                <button id="cancelEditBtn" class="secondary hidden" type="button">Cancel</button>
+            </div>
+        </section>
+
+        <section class="panel">
+            <div class="profiles-header">
+                <h2>Saved Profiles</h2>
+                <div class="tools-row">
+                    <button id="exportBtn" type="button" class="btn-sm secondary" title="Export Profiles JSON">Export</button>
+                    <button id="importBtn" type="button" class="btn-sm secondary" title="Import Profiles JSON">Import</button>
+                    <input id="searchProfiles" type="search" placeholder="Search...">
+                </div>
+            </div>
+            <input type="file" id="importFileInput" accept=".json" class="hidden">
+
+            <div id="status" class="status" role="status" aria-live="polite"></div>
+            <div id="profiles" class="profiles"></div>
+        </section>
+
+        <footer class="footer">
+            <a href="https://buymeacoffee.com/pankajnegi" target="_blank" rel="noopener noreferrer" class="bmc-button" id="bmcBtn">
+                <span>☕</span> Buy me a coffee
+            </a>
+        </footer>
+    </main>
+
+    <script src="storage.js"></script>
+    <script src="popup.js"></script>
+</body>
+
+</html>
