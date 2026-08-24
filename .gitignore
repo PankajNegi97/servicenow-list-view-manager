@@ -7,5 +7,5 @@ Thumbs.db
 .idea/
 *.swp
 
-# Build output zip files (optional)
-# *.zip
+# Scratch / temporary files
+scratch/

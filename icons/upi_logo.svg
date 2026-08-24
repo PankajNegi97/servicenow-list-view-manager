@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 82 28" width="70" height="24">
+  <!-- UPI Text -->
+  <g fill="#1E293B">
+    <!-- U -->
+    <path d="M 6 6 L 13 6 L 8 20 L 17 20 L 22 6 L 28 6 L 22 26 L 1 26 Z" />
+    <!-- P -->
+    <path d="M 30 6 L 47 6 C 54 6 56 10 54 15 C 52 20 47 21 41 21 L 34 21 L 32 26 L 26 26 Z M 38 11 L 36 16 L 42 16 C 45 16 47 15 48 13 C 49 11 48 11 44 11 Z" />
+    <!-- I -->
+    <path d="M 57 6 L 64 6 L 58 26 L 51 26 Z" />
+  </g>
+
+  <!-- Orange Chevron -->
+  <polygon points="62,26 69,6 76,16" fill="#F97316" />
+
+  <!-- Green Chevron -->
+  <polygon points="67,26 74,6 81,16" fill="#10B981" />
+</svg>

@@ -6,7 +6,7 @@ This step-by-step guide explains how to publish **List View Manager for ServiceN
 
 ## 📦 Ready-to-Upload Package
 Your extension ZIP package is compiled and ready:
-- **Location**: `list-view-manager-v1.0.0.zip` (in the project root)
+- **Location**: `list-view-manager-v1.2.0.zip` (in the project root)
 - **Includes**: `manifest.json`, icons (`16x16`, `48x48`, `128x128`, `512x512 logo`), `popup.html`, `popup.css`, `popup.js`, `storage.js`, `background.js`, `content.js`.
 - **Privacy Policy**: [`PRIVACY_POLICY.md`](PRIVACY_POLICY.md) (required by Google Chrome Web Store).
 

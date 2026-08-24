@@ -18,8 +18,52 @@
                     <p>For ServiceNow columns</p>
                 </div>
             </div>
-            <span class="version">v1.0</span>
+            <div class="header-right">
+                <button id="helpBtn" type="button" class="btn-help" title="How to use this extension">❓ Guide</button>
+                <span class="version">v1.2</span>
+            </div>
         </header>
+
+        <div class="quick-steps-bar">
+            <span>💡 <strong>Quick Steps:</strong> Open List Layout in SN &rarr; Click Apply &rarr; Watch Progress %</span>
+        </div>
+
+        <section id="helpPanel" class="panel help-panel hidden">
+            <div class="help-header">
+                <h2>📖 Quick Start Guide</h2>
+                <button id="closeHelpBtn" type="button" class="btn-text">✕ Close</button>
+            </div>
+            <ol class="help-steps">
+                <li>
+                    <span class="step-num">1</span>
+                    <div>
+                        <strong>Create or Capture Profile</strong>
+                        <p>Click <code>📸 Capture from Page</code> while on a ServiceNow list or List Layout page, or type column names manually (one per line).</p>
+                    </div>
+                </li>
+                <li>
+                    <span class="step-num">2</span>
+                    <div>
+                        <strong>Open List Layout in ServiceNow</strong>
+                        <p>In ServiceNow, right-click any table header &rarr; <code>Configure</code> &rarr; <code>List Layout</code> (<strong>keep this screen open!</strong>).</p>
+                    </div>
+                </li>
+                <li>
+                    <span class="step-num">3</span>
+                    <div>
+                        <strong>Click "Apply" &amp; Wait</strong>
+                        <p>Click <code>Apply</code> on your saved profile and <strong>wait a few seconds</strong> while columns are automatically moved and saved!</p>
+                    </div>
+                </li>
+                <li>
+                    <span class="step-num">4</span>
+                    <div>
+                        <strong>Backup &amp; Share</strong>
+                        <p>Use <code>Export</code> and <code>Import</code> buttons to backup or share column presets JSON with teammates.</p>
+                    </div>
+                </li>
+            </ol>
+        </section>
 
 
         <section class="panel">
@@ -54,8 +98,11 @@
         </section>
 
         <footer class="footer">
-            <a href="https://buymeacoffee.com/pankajnegi" target="_blank" rel="noopener noreferrer" class="bmc-button" id="bmcBtn">
+            <a href="https://buymeacoffee.com/pankajnegi" target="_blank" rel="noopener noreferrer" class="bmc-button" id="bmcBtn" title="Buy me a coffee">
                 <span>☕</span> Buy me a coffee
+            </a>
+            <a href="https://onlychai.neocities.org/support?name=Pankaj%20Negi&upi=Pankajitft2015-2%40okicici#" target="_blank" rel="noopener noreferrer" class="upi-button" id="upiBtn" title="Support via UPI">
+                <img src="icons/upi_logo.svg" alt="UPI" class="upi-logo-img">
             </a>
         </footer>
     </main>
