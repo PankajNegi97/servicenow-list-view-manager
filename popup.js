@@ -700,7 +700,18 @@ async function applyProfileOnPage(profileColumns) {
 
     updateOverlay(5, `Found List Layout (${initialRightCount} columns). Clearing...`);
 
-    for (let guard = 0; right.options.length > 0 && guard < 250; guard++) {
+    if (right.options.length > 0) {
+        for (let i = 0; i < right.options.length; i++) {
+            right.options[i].selected = true;
+        }
+        right.dispatchEvent(new Event("change", { bubbles: true }));
+        moveRightToLeft(root);
+        await sleep(250);
+    }
+
+    const maxClearingAttempts = Math.max(3000, initialRightCount * 2);
+
+    for (let guard = 0; right.options.length > 0 && guard < maxClearingAttempts; guard++) {
         const before = right.options.length;
         selectOnly(right, right.options[0]);
 
@@ -726,9 +737,9 @@ async function applyProfileOnPage(profileColumns) {
 
         stepCount++;
         const pct = (stepCount / totalSteps) * 100;
-        updateOverlay(pct, `Clearing current columns (${stepCount}/${initialRightCount})...`);
+        updateOverlay(pct, `Clearing current columns (${initialRightCount - right.options.length}/${initialRightCount})...`);
 
-        await sleep(80);
+        await sleep(50);
     }
 
     for (const wanted of requestedColumns) {
