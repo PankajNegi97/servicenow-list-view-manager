@@ -1,5 +1,6 @@
 const profileName = document.getElementById("profileName");
 const columns = document.getElementById("columns");
+const columnChips = document.getElementById("columnChips");
 const saveBtn = document.getElementById("saveBtn");
 const cancelEditBtn = document.getElementById("cancelEditBtn");
 const captureBtn = document.getElementById("captureBtn");
@@ -26,6 +27,7 @@ exportBtn.addEventListener("click", exportProfiles);
 importBtn.addEventListener("click", () => importFileInput.click());
 importFileInput.addEventListener("change", importProfiles);
 searchProfiles.addEventListener("input", renderProfiles);
+columns.addEventListener("input", renderChips);
 if (helpBtn) helpBtn.addEventListener("click", toggleHelp);
 if (closeHelpBtn) closeHelpBtn.addEventListener("click", () => helpPanel.classList.add("hidden"));
 if (rateBtn) rateBtn.addEventListener("click", openRatePage);
@@ -69,8 +71,13 @@ async function saveProfile() {
         await Storage.deleteProfile(editingProfile);
     }
 
-    await Storage.saveProfile(name, list);
-    setStatus(`Saved profile "${name}".`, "success");
+    const synced = await Storage.saveProfile(name, list);
+    setStatus(
+        synced
+            ? `Saved profile "${name}".`
+            : `Saved "${name}" on this device only (too large to sync across devices).`,
+        synced ? "success" : "info"
+    );
     resetEditor();
     await loadProfiles();
 }
@@ -163,6 +170,7 @@ function editProfile(name, profileColumns) {
     editingProfile = name;
     profileName.value = name;
     columns.value = profileColumns.join("\n");
+    renderChips();
     saveBtn.textContent = "Update Profile";
     cancelEditBtn.classList.remove("hidden");
     setStatus(`Editing "${name}".`, "info");
@@ -256,6 +264,7 @@ async function captureCurrentColumns() {
         }
 
         columns.value = captured.columns.join("\n");
+        renderChips();
         if (!profileName.value.trim() && captured.suggestedName) {
             profileName.value = captured.suggestedName;
         }
@@ -336,15 +345,27 @@ async function applyProfile(name, profileColumns) {
         const foundDialog = frameResults.find(result => result.found);
 
         if (success) {
-            setStatus(success.message || `Applied "${name}".`, "success");
+            const applied = success.applied || [];
+            setStatus(
+                `✅ Applied "${name}" — ${applied.length} column${applied.length === 1 ? "" : "s"}: ${applied.join(", ")}`,
+                "success"
+            );
             return;
         }
 
         if (foundDialog && foundDialog.missing && foundDialog.missing.length) {
+            const applied = foundDialog.applied || [];
+            const appliedNote = applied.length ? ` Matched ${applied.length}: ${applied.join(", ")}.` : "";
             setStatus(
-                `Could not apply "${name}". Missing columns: ${foundDialog.missing.join(", ")}. The list was not saved.`,
+                `Could not apply "${name}". Missing on this table: ${foundDialog.missing.join(", ")}.${appliedNote} The list was not saved.`,
                 "error"
             );
+            return;
+        }
+
+        const nextExp = frameResults.find(result => result.nextExperience);
+        if (nextExp) {
+            setStatus(nextExp.message, "error");
             return;
         }
 
@@ -411,8 +432,66 @@ function resetEditor() {
     editingProfile = null;
     profileName.value = "";
     columns.value = "";
+    renderChips();
     saveBtn.textContent = "Save Profile";
     cancelEditBtn.classList.add("hidden");
+}
+
+let dragIndex = null;
+
+// Mirror the textarea as a draggable chip list so column order is visible and editable.
+function renderChips() {
+    if (!columnChips) return;
+    const list = parseColumns(columns.value);
+    columnChips.innerHTML = "";
+
+    list.forEach((col, index) => {
+        const chip = document.createElement("div");
+        chip.className = "chip";
+        chip.draggable = true;
+
+        const handle = document.createElement("span");
+        handle.className = "chip-handle";
+        handle.textContent = "⠿";
+
+        const label = document.createElement("span");
+        label.className = "chip-label";
+        label.textContent = col;
+
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.className = "chip-remove";
+        remove.textContent = "✕";
+        remove.title = "Remove column";
+        remove.addEventListener("click", () => {
+            list.splice(index, 1);
+            writeColumns(list);
+        });
+
+        chip.append(handle, label, remove);
+
+        chip.addEventListener("dragstart", () => {
+            dragIndex = index;
+            chip.classList.add("dragging");
+        });
+        chip.addEventListener("dragend", () => chip.classList.remove("dragging"));
+        chip.addEventListener("dragover", event => event.preventDefault());
+        chip.addEventListener("drop", event => {
+            event.preventDefault();
+            if (dragIndex === null || dragIndex === index) return;
+            const [moved] = list.splice(dragIndex, 1);
+            list.splice(index, 0, moved);
+            dragIndex = null;
+            writeColumns(list);
+        });
+
+        columnChips.appendChild(chip);
+    });
+}
+
+function writeColumns(list) {
+    columns.value = list.join("\n"); // setting .value does not fire "input", so no loop
+    renderChips();
 }
 
 function parseColumns(value) {
@@ -697,13 +776,27 @@ async function applyProfileOnPage(profileColumns) {
         return clickButton(button);
     };
 
+    const looksNextExperience = () => {
+        try {
+            return Boolean(
+                document.querySelector("macroponent-f51912f4c700201072b211d4d8c26010, now-appshell, sn-polaris-layout, [class*='polaris']")
+            ) || /\/now\//.test(location.pathname);
+        } catch (e) {
+            return false;
+        }
+    };
+
     const layout = await waitForLayout();
 
     if (!layout) {
+        const nextExperience = looksNextExperience();
         return {
             ok: false,
             found: false,
-            message: "List Layout was not found in this frame."
+            nextExperience,
+            message: nextExperience
+                ? "This looks like ServiceNow Next Experience / Workspace. Open the classic 'Configure → List Layout' slushbucket — that modern list config isn't supported yet."
+                : "List Layout was not found in this frame."
         };
     }
 
