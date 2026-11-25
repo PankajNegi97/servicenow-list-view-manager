@@ -51,7 +51,7 @@ const Storage = {
 
         let count = 0;
         for (const [name, columns] of Object.entries(incoming)) {
-            if (typeof name === "string" && Array.isArray(columns)) {
+            if (typeof name === "string" && Array.isArray(columns) && columns.every(c => typeof c === "string")) {
                 profiles[name] = columns;
                 count++;
             }

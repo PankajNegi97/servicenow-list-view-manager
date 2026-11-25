@@ -439,26 +439,63 @@ button.danger:hover {
 
 .footer {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     padding-top: 4px;
     margin-top: 4px;
 }
 
+.footer-btn,
 .bmc-button,
 .upi-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    padding: 6px 12px;
+    gap: 4px;
+    padding: 5px 8px;
     font-size: 11px;
     font-weight: 700;
     border-radius: 6px;
     text-decoration: none;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    cursor: pointer;
+    border: 1px solid var(--border);
+}
+
+.rate-btn {
+    background-color: rgba(234, 179, 8, 0.12);
+    color: #b45309;
+    border-color: rgba(234, 179, 8, 0.3);
+}
+
+.rate-btn:hover {
+    background-color: #f59e0b;
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+@media (prefers-color-scheme: dark) {
+    .rate-btn {
+        color: #fbbf24;
+    }
+    .rate-btn:hover {
+        color: #0f172a;
+    }
+}
+
+.share-btn {
+    background-color: rgba(56, 189, 248, 0.12);
+    color: var(--primary);
+    border-color: rgba(56, 189, 248, 0.3);
+}
+
+.share-btn:hover {
+    background-color: var(--primary);
+    color: #ffffff;
+    transform: translateY(-1px);
 }
 
 .bmc-button {
@@ -476,7 +513,7 @@ button.danger:hover {
 .upi-button {
     background-color: #ffffff;
     border: 1px solid #cbd5e1;
-    padding: 4px 10px;
+    padding: 3px 8px;
 }
 
 .upi-button:hover {
@@ -487,11 +524,12 @@ button.danger:hover {
 }
 
 .upi-logo-img {
-    height: 18px;
+    height: 16px;
     width: auto;
     display: block;
 }
 
-.bmc-button span {
-    font-size: 13px;
+.bmc-button span,
+.footer-btn span {
+    font-size: 12px;
 }

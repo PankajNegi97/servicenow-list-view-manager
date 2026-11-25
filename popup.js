@@ -13,6 +13,9 @@ const helpBtn = document.getElementById("helpBtn");
 const closeHelpBtn = document.getElementById("closeHelpBtn");
 const helpPanel = document.getElementById("helpPanel");
 
+const rateBtn = document.getElementById("rateBtn");
+const shareBtn = document.getElementById("shareBtn");
+
 let editingProfile = null;
 let profilesCache = {};
 
@@ -25,8 +28,24 @@ importFileInput.addEventListener("change", importProfiles);
 searchProfiles.addEventListener("input", renderProfiles);
 if (helpBtn) helpBtn.addEventListener("click", toggleHelp);
 if (closeHelpBtn) closeHelpBtn.addEventListener("click", () => helpPanel.classList.add("hidden"));
+if (rateBtn) rateBtn.addEventListener("click", openRatePage);
+if (shareBtn) shareBtn.addEventListener("click", shareExtension);
 
 loadProfiles();
+
+function openRatePage() {
+    window.open("https://chromewebstore.google.com/detail/list-view-manager-for-servicenow", "_blank");
+}
+
+async function shareExtension() {
+    const shareText = "Check out List View Manager for ServiceNow - a free Chrome extension to 1-click apply, capture & share column list layouts in ServiceNow!\nhttps://chromewebstore.google.com/detail/list-view-manager-for-servicenow";
+    try {
+        await navigator.clipboard.writeText(shareText);
+        setStatus("Copied Chrome Extension share link to clipboard! Share it with your team.", "success");
+    } catch (e) {
+        setStatus("Share link: https://chromewebstore.google.com/detail/list-view-manager-for-servicenow", "info");
+    }
+}
 
 function toggleHelp() {
     helpPanel.classList.toggle("hidden");

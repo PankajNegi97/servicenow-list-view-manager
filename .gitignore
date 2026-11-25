@@ -9,3 +9,6 @@ Thumbs.db
 
 # Scratch / temporary files
 scratch/
+
+# Build artifacts
+*.zip
